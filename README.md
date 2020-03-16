@@ -27,6 +27,8 @@ Additionally, Eigen
 Download and copy the files functions.R, mesh\_boolean\_R.cpp, and
 mesh\_volume\_R.cpp to a folder where you perform your analysis.
 
+\#\#\#Load R packages
+
 ## Including Plots
 
 You can also embed plots, for example:
