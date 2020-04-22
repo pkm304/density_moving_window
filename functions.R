@@ -453,10 +453,6 @@ sum.marker.intensity.per.shell <- function(extracted.list ,shells){
 }
 
 
-
-
-
-
 if(1){#local machine
   Sys.setenv("PKG_CXXFLAGS"="-std=c++11 -I/Users/kyemyungpark/Dropbox/Codes/project_tcell_activation/analysis/libigl/include  -I/opt/local/include -I/opt/local/include/eigen3",
              "PKG_LIBS"="-lm -lCGAL -lCGAL_Core -frounding-math -lmpfr -lgmp ")
@@ -467,22 +463,13 @@ if(1){#local machine
 }
 
 
-
-
-
-
-if(0){
-  #in cluster locus
-  library(Rcpp)
-  Sys.setenv("PKG_CXXFLAGS"="-std=c++11",
-             "PKG_LIBS"="-lm -lCGAL -lCGAL_Core -frounding-math -lmpfr -lgmp -lboost_thread")
-  sourceCpp("mesh_boolean_R.cpp", rebuild = T, verbose= T, cacheDir = "sharedlib/" )
-  # -I/nethome/parkk6/.conda/envs/volumetry/include
-  Sys.setenv("PKG_CXXFLAGS"="-std=c++11",
-             "PKG_LIBS"="-lm -lCGAL -lCGAL_Core -frounding-math -lmpfr -lgmp -lboost_thread")
-  sourceCpp("mesh_volume_R.cpp", rebuild = T, cacheDir = "sharedlib/" )
-  
-}
+#before compile specify the directiries of libigl and cash for complied libraries
+# Sys.setenv("PKG_CXXFLAGS"="-std=c++11 -I/path_to_libigl/include  -I/opt/local/include -I/opt/local/include/eigen3",
+#            "PKG_LIBS"="-lm -lCGAL -lCGAL_Core -frounding-math -lmpfr -lgmp ")
+# sourceCpp("mesh_boolean_R.cpp", rebuild = F, cacheDir = "path_to_current_dir/sharedlib/" )
+# Sys.setenv("PKG_CXXFLAGS"="-std=c++11 -I/path_to_libigl/include -I/usr/local -I/opt/local/include -I/opt/local/include/eigen3", "PKG_LIBS"="-lm -lCGAL_Core -frounding-math -lmpfr -lgmp")
+# sourceCpp("mesh_volume_R.cpp", rebuild = , cacheDir = "path_to_current_dir/sharedlib/" )
+# 
 
 
 wrap_mesh_boolean <- function(mesh1, mesh2, op_type = "intersect" ){
@@ -503,9 +490,6 @@ wrap_mesh_boolean <- function(mesh1, mesh2, op_type = "intersect" ){
   
   return(mesh_output)
 }
-
-
-
 
 
 #wrapper function of generating sphere
@@ -564,19 +548,12 @@ const.cylinder.mesh <- function(r, height= 20, center){
 
 
 
-
-
-
 wrap_mesh_volume <- function(mesh){
   temp.output <- mesh_volume(Vi = as.matrix(t(mesh$vb[1:3,])),
                              Fi = as.matrix(t(mesh$it)-1)
                             )
   return( temp.output)
 }
-
-
-
-
 
 
 
