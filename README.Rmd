@@ -102,7 +102,7 @@ WT[["iso_8"]] <- read.csv("data/IL2 block/isotype/isotype - n=3 - 1/WT XYZ.csv")
 
 ### Treg extraction centered at CD4 T cells at distances from (0,1) to (99,100) um.
 This step extracts Tregs' coordinates and marker intensities at varying distance from (0,1) to (99,100) um centered at each CD4 T cell (reference cells). Users can specify the distance ranges upon their interests. We call each 1um interval as a shell. 
-```{r, message = FALSE }
+```{r, results = 'hide' }
 tregs.TXA23.extr <- extract.cells.increasing.shells( cells.list = tregs, 
                                                        refs.list = TXA23, 
                                                        shells = c(0:99) )
