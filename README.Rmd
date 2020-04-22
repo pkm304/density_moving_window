@@ -9,7 +9,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Introduction
 
-This repository contains source codes of moving-window cell density analysis presented in the paper <title> and examples of the analysis. 
+This repository contains source codes of moving-window cell density analysis presented in the paper "A local regulatory T cell feedback circuit maintains immunological homeostasis by pruning self-activated T cells" and examples of the analysis. 
 
 
 ## Prerequisit
@@ -24,7 +24,7 @@ Download and copy the files functions.R, mesh_boolean_R.cpp, and mesh_volume_R.c
 ### Load R packages and source functions.R.
 
 In functions.R, there are various functions defined for use in the following. Sourcing functions.R includes compilation of CPP codes through the Rcpp package. Users are required to specify relevant directiries. Please see comments in functions.R.
-```{r}
+```{r, echo=F}
 library(rgl)
 library(Rcpp)
 library(nat)
@@ -101,8 +101,8 @@ WT[["iso_8"]] <- read.csv("data/IL2 block/isotype/isotype - n=3 - 1/WT XYZ.csv")
 ```
 
 ### Treg extraction centered at CD4 T cells at distances from (0,1) to (99,100) um.
-This step extracts Tregs' coordinates and marker at varying distance from (0,1) to (99,100) um centered at each CD4 T cells (reference cells). Users can specify the distance ranges for their interest. We call each 1um interval as a shell. 
-```{r}
+This step extracts Tregs' coordinates and marker intensities at varying distance from (0,1) to (99,100) um centered at each CD4 T cell (reference cells). Users can specify the distance ranges upon their interests. We call each 1um interval as a shell. 
+```{r, echo = F}
 tregs.TXA23.extr <- extract.cells.increasing.shells( cells.list = tregs, 
                                                        refs.list = TXA23, 
                                                        shells = c(0:99) )
@@ -135,7 +135,7 @@ plot3d(tregs.TXA23.whole.LN.surf$ab_2, aspect = F) # check the shape of the surf
 ```
 
 ### Measuring edge-corrected volumes of shells (Takes long).
-This is the most important yet most time consuming step. This obtains edge-corrected volumes of shells. Depending the number of reference cells, this may take more than a day. If users are accessible to high performance computing facilities (HPC), it is recommended to split this step into multiple jobs and run those in parallel (HPC) if the number of reference cells exceed several hundreds.
+This is the most important yet most time consuming step. This obtains edge-corrected volumes of shells. Depending on the number of reference cells, this may take more than a day. If users are accessible to high performance computing facilities (HPC), it is recommended to split this step into multiple jobs and run those in parallel (HPC) if the number of reference cells exceed several hundreds.
 
 ```{r}
 #Edge correected volume of sphere (Takes long)
@@ -212,6 +212,7 @@ plot(1:100,colMeans(shell.density.WT.1um[idx.ar.ab,1:100]), col = "red", type = 
 points(1:100,colMeans(shell.density.TXA23.1um[idx.ar.iso,1:100]),col = "blue", type = "l", lwd = 5)
 legend("topright", legend=c("ab", "iso"), pch=16, col=c("red", "blue"))
 ```
+
 Densities of 1um shells are noisy due to the finite size of Tregs (~ 5um of radius) and point estimations of coordinates.
 
 ### Obtain density with moving windows with a specified width.

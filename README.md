@@ -4,11 +4,9 @@ Moving window analysis of cell number density of lymph node images
 ## Introduction
 
 This repository contains source codes of moving-window cell density
-analysis presented in the paper
-
-<title>
-
-and examples of the analysis.
+analysis presented in the paper “A local regulatory T cell feedback
+circuit maintains immunological homeostasis by pruning self-activated T
+cells” and examples of the analysis.
 
 ## Prerequisit
 
@@ -34,12 +32,6 @@ following. Sourcing functions.R includes compilation of CPP codes
 through the Rcpp package. Users are required to specify relevant
 directiries. Please see comments in functions.R.
 
-``` r
-library(rgl)
-library(Rcpp)
-library(nat)
-```
-
     ## Registered S3 method overwritten by 'nat':
     ##   method             from
     ##   as.mesh3d.ashape3d rgl
@@ -53,16 +45,7 @@ library(nat)
     ## 
     ##     intersect, setdiff, union
 
-``` r
-library(alphashape3d)
-```
-
     ## Loading required package: geometry
-
-``` r
-library(Rvcg)
-source("functions.R")
-```
 
     ## Loading required package: viridisLite
 
@@ -145,17 +128,11 @@ WT[["iso_8"]] <- read.csv("data/IL2 block/isotype/isotype - n=3 - 1/WT XYZ.csv")
 
 ### Treg extraction centered at CD4 T cells at distances from (0,1) to (99,100) um.
 
-This step extracts Tregs’ coordinates and marker at varying distance
-from (0,1) to (99,100) um centered at each CD4 T cells (reference
-cells). Users can specify the distance ranges for their interest. We
-call each 1um interval as a
-shell.
-
-``` r
-tregs.TXA23.extr <- extract.cells.increasing.shells( cells.list = tregs, 
-                                                       refs.list = TXA23, 
-                                                       shells = c(0:99) )
-```
+This step extracts Tregs’ coordinates and marker intensities at varying
+distance from (0,1) to (99,100) um centered at each CD4 T cell
+(reference cells). Users can specify the distance ranges upon their
+interests. We call each 1um interval as a
+    shell.
 
     ##  [1] "ab_1"  "ab_2"  "ab_3"  "ab_4"  "ab_5"  "ab_6"  "ab_7"  "iso_1" "iso_2"
     ## [10] "iso_3" "iso_4" "iso_5" "iso_6" "iso_7" "iso_8"
@@ -1674,12 +1651,6 @@ tregs.TXA23.extr <- extract.cells.increasing.shells( cells.list = tregs,
     ## [1] 97
     ## [1] 98
     ## [1] 99
-
-``` r
-tregs.WT.extr <- extract.cells.increasing.shells( cells.list = tregs, 
-                                                       refs.list = WT, 
-                                                       shells = c(0:99) )
-```
 
     ##  [1] "ab_1"  "ab_2"  "ab_3"  "ab_4"  "ab_5"  "ab_6"  "ab_7"  "iso_1" "iso_2"
     ## [10] "iso_3" "iso_4" "iso_5" "iso_6" "iso_7" "iso_8"
@@ -3290,7 +3261,7 @@ plot3d(tregs.TXA23.whole.LN.surf$ab_2, aspect = F) # check the shape of the surf
 ### Measuring edge-corrected volumes of shells (Takes long).
 
 This is the most important yet most time consuming step. This obtains
-edge-corrected volumes of shells. Depending the number of reference
+edge-corrected volumes of shells. Depending on the number of reference
 cells, this may take more than a day. If users are accessible to high
 performance computing facilities (HPC), it is recommended to split this
 step into multiple jobs and run those in parallel (HPC) if the number of
@@ -3388,9 +3359,10 @@ points(1:100,colMeans(shell.density.TXA23.1um[idx.ar.iso,1:100]),col = "blue", t
 legend("topright", legend=c("ab", "iso"), pch=16, col=c("red", "blue"))
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-9-2.png)<!-- --> Densities of
-1um shells are noisy due to the finite size of Tregs (~ 5um of radius)
-and point estimations of coordinates.
+![](README_files/figure-gfm/unnamed-chunk-9-2.png)<!-- -->
+
+Densities of 1um shells are noisy due to the finite size of Tregs (~ 5um
+of radius) and point estimations of coordinates.
 
 ### Obtain density with moving windows with a specified width.
 
