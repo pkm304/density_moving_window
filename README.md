@@ -32,22 +32,14 @@ following. Sourcing functions.R includes compilation of CPP codes
 through the Rcpp package. Users are required to specify relevant
 directiries. Please see comments in functions.R.
 
-    ## Registered S3 method overwritten by 'nat':
-    ##   method             from
-    ##   as.mesh3d.ashape3d rgl
-
-    ## Some nat functions depend on a CMTK installation. See ?cmtk and README.md for details.
-
-    ## 
-    ## Attaching package: 'nat'
-
-    ## The following objects are masked from 'package:base':
-    ## 
-    ##     intersect, setdiff, union
-
-    ## Loading required package: geometry
-
-    ## Loading required package: viridisLite
+``` r
+library(rgl)
+library(Rcpp)
+library(nat)
+library(alphashape3d)
+library(Rvcg)
+source("functions.R")
+```
 
 ### Load data.
 
@@ -132,7 +124,13 @@ This step extracts Tregs’ coordinates and marker intensities at varying
 distance from (0,1) to (99,100) um centered at each CD4 T cell
 (reference cells). Users can specify the distance ranges upon their
 interests. We call each 1um interval as a
-    shell.
+shell.
+
+``` r
+tregs.TXA23.extr <- extract.cells.increasing.shells( cells.list = tregs, 
+                                                       refs.list = TXA23, 
+                                                       shells = c(0:99) )
+```
 
     ##  [1] "ab_1"  "ab_2"  "ab_3"  "ab_4"  "ab_5"  "ab_6"  "ab_7"  "iso_1" "iso_2"
     ## [10] "iso_3" "iso_4" "iso_5" "iso_6" "iso_7" "iso_8"
@@ -1651,6 +1649,12 @@ interests. We call each 1um interval as a
     ## [1] 97
     ## [1] 98
     ## [1] 99
+
+``` r
+tregs.WT.extr <- extract.cells.increasing.shells( cells.list = tregs, 
+                                                       refs.list = WT, 
+                                                       shells = c(0:99) )
+```
 
     ##  [1] "ab_1"  "ab_2"  "ab_3"  "ab_4"  "ab_5"  "ab_6"  "ab_7"  "iso_1" "iso_2"
     ## [10] "iso_3" "iso_4" "iso_5" "iso_6" "iso_7" "iso_8"
